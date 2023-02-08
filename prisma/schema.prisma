@@ -8,20 +8,22 @@ datasource db {
 }
 
 model Car {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now())
+  id             Int           @id @default(autoincrement())
+  createdAt      DateTime      @default(now())
   brandName      String
   groupModelName String
   modelName      String
   year           Int
   price          BigInt
+  CarPurchase    CarPurchase[]
 }
 
 model Leasing {
-  id              Int    @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   leasingName     String
   ratesPercentage Int
   term            Int
+  CarPurchase     CarPurchase[]
 }
 
 model User {
@@ -29,4 +31,13 @@ model User {
   name     String
   username String @unique
   balance  BigInt @default(0)
+}
+
+model CarPurchase {
+  id             Int     @id @default(autoincrement())
+  car            Car     @relation(fields: [carId], references: [id])
+  carId          Int
+  leasing        Leasing @relation(fields: [leasingId], references: [id])
+  leasingId      Int
+  creditDuration Int
 }
