@@ -4,5 +4,9 @@
   "description": "Credit system simulation for a car purchasing site DjuBli.",
   "main": "server.js",
   "author": "doanandreas <doanan3736@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.10.0",
+    "prisma": "^4.10.0"
+  }
 }
