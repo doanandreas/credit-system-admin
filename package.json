@@ -5,6 +5,9 @@
   "main": "server.js",
   "author": "doanandreas <doanan3736@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "migrate": "prisma migrate dev"
+  },
   "dependencies": {
     "@prisma/client": "^4.10.0",
     "prisma": "^4.10.0"
