@@ -16,7 +16,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: { ...user, balance: parseInt(user.balance) },
+    data: { ...user, balance: user.balance.toString() },
   });
 });
 
@@ -45,7 +45,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     name: user.name,
-    balance: parseInt(user.balance),
+    balance: user.balance.toString(),
     token,
   });
 });
