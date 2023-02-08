@@ -14,6 +14,10 @@ const errorHandler = (err, req, res, next) => {
     }
   }
 
+  if (err instanceof Prisma.PrismaClientValidationError) {
+    error = new ErrorResponse("Missing or invalid field(s)", 400);
+  }
+
   res.status(error.statusCode || 500).json({
     success: false,
     error: error.message || "Server Error",

@@ -49,3 +49,13 @@ exports.login = asyncHandler(async (req, res, next) => {
     token,
   });
 });
+
+// @desc	  Log out
+// @route	  POST /auth/logout
+// @access	Private
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    message: `Thank You ${req.user.name}, See You Next Time!`,
+  });
+});
