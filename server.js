@@ -10,9 +10,10 @@ const app = express();
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
-} else if (process.env.NODE_ENV === "production") {
-  app.use(morgan("common"));
 }
+
+app.use(morgan("common"));
+app.use(express.json());
 
 app.use(router);
 
