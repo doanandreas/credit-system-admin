@@ -54,6 +54,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @route	  POST /auth/logout
 // @access	Private
 exports.logout = asyncHandler(async (req, res, next) => {
+  // TODO: create token blacklist on Redis
   res.status(200).json({
     success: true,
     message: `Thank You ${req.user.name}, See You Next Time!`,
