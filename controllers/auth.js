@@ -12,9 +12,12 @@ const prisma = new PrismaClient();
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, username } = req.body;
 
-  
+  const user = await prisma.user.create({ data: { name, username } });
 
-  res.status(200).json({ success: true });
+  res.status(200).json({
+    success: true,
+    data: { ...user, balance: parseInt(user.balance) },
+  });
 });
 
 // @desc	  Log in
