@@ -6,7 +6,11 @@
   "author": "doanandreas <doanan3736@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "node prisma/seeder.js"
   },
   "dependencies": {
     "@prisma/client": "^4.10.0",

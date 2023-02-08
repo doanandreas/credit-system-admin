@@ -14,7 +14,7 @@ model Car {
   groupModelName  String
   modelName       String
   year            Int
-  price           Int
+  price           String
 }
 
 model Leasing {
