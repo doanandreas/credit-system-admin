@@ -5,7 +5,7 @@
     "groupModelName": "Avanza",
     "modelName": "1.3 E MT",
     "year": 2015,
-    "price": "110000000"
+    "price": 110000000
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "groupModelName": "Avanza",
     "modelName": "1.3 E AT",
     "year": 2015,
-    "price": "115000000"
+    "price": 115000000
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "groupModelName": "Agya",
     "modelName": "1.0 L MT",
     "year": 2015,
-    "price": "88500000"
+    "price": 88500000
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "groupModelName": "Tiguan",
     "modelName": "1.4 TFSI AT",
     "year": 2015,
-    "price": "213000000"
+    "price": 213000000
   },
   {
     "id": 5,
@@ -37,7 +37,7 @@
     "groupModelName": "X1",
     "modelName": "F48 sDrive18i Xline Executive AT",
     "year": 2016,
-    "price": "410000000"
+    "price": 410000000
   },
   {
     "id": 6,
@@ -45,7 +45,7 @@
     "groupModelName": "HR-V",
     "modelName": "1.8 E Prestige",
     "year": 2016,
-    "price": "259000000"
+    "price": 259000000
   },
   {
     "id": 7,
@@ -53,6 +53,6 @@
     "groupModelName": "LX",
     "modelName": "570 J200 SUV AT",
     "year": 2009,
-    "price": "1250000000"
+    "price": 1250000000
   }
 ]
