@@ -1,5 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
+const jwt = require("jsonwebtoken");
+
 const asyncHandler = require("../utils/asyncHandler");
+const ErrorResponse = require("../utils/errorResponse");
 
 const prisma = new PrismaClient();
 
@@ -15,5 +18,14 @@ exports.login = asyncHandler(async (req, res, next) => {
     },
   });
 
-  res.status(200).json({ success: true, ...user });
+  const token = jwt.sign({ username }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+
+  res.status(200).json({
+    success: true,
+    name: user.name,
+    balance: parseInt(user.balance),
+    token,
+  });
 });
