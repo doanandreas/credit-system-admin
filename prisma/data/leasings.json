@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "leasingName": "Clipan Finance",
+    "ratesPercentage": 12,
+    "term": 12
+  },
+	{
+    "id": 2,
+    "leasingName": "BFI",
+    "ratesPercentage": 10,
+    "term": 6
+  },
+	{
+    "id": 3,
+    "leasingName": "SMS Finance",
+    "ratesPercentage": 15,
+    "term": 12
+  }
+]
