@@ -14,12 +14,19 @@ model Car {
   groupModelName  String
   modelName       String
   year            Int
-  price           String
+  price           BigInt
 }
 
 model Leasing {
-  id              Int @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   leasingName     String
   ratesPercentage Int
   term            Int
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  username  String  @unique
+  name      String
+  balance   BigInt
 }

@@ -14,6 +14,10 @@ async function seed() {
     fs.readFileSync(`${__dirname}/data/leasings.json`, "utf-8")
   );
 
+  const users = JSON.parse(
+    fs.readFileSync(`${__dirname}/data/users.json`, "utf-8")
+  );
+
   await prisma.car.deleteMany();
   for (const car of cars) {
     await prisma.car.create({
@@ -25,6 +29,13 @@ async function seed() {
   for (const leasing of leasings) {
     await prisma.leasing.create({
       data: leasing,
+    });
+  }
+
+  await prisma.user.deleteMany();
+  for (const user of users) {
+    await prisma.user.create({
+      data: user,
     });
   }
 }
