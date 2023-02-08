@@ -1,14 +1,10 @@
 [
   {
-    "id": 1,
     "name": "Bob",
-    "username": "bob123",
-    "balance": 0
+    "username": "bob123"
   },
   {
-    "id": 2,
     "name": "Andre",
-    "username": "andretaulani",
-    "balance": 0
+    "username": "andretaulani"
   }
 ]

@@ -8,25 +8,25 @@ datasource db {
 }
 
 model Car {
-  id              Int       @id @default(autoincrement())
-  createdAt       DateTime  @default(now())
-  brandName       String
-  groupModelName  String
-  modelName       String
-  year            Int
-  price           BigInt
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  brandName      String
+  groupModelName String
+  modelName      String
+  year           Int
+  price          BigInt
 }
 
 model Leasing {
-  id              Int     @id @default(autoincrement())
+  id              Int    @id @default(autoincrement())
   leasingName     String
   ratesPercentage Int
   term            Int
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  username  String  @unique
-  name      String
-  balance   BigInt
+  id       Int    @id @default(autoincrement())
+  name     String
+  username String @unique
+  balance  BigInt @default(0)
 }
