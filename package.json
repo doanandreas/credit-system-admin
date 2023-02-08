@@ -6,6 +6,8 @@
   "author": "doanandreas <doanan3736@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node server",
+    "dev": "nodemon server",
     "migrate": "prisma migrate dev",
     "seed": "prisma db seed"
   },
@@ -14,6 +16,11 @@
   },
   "dependencies": {
     "@prisma/client": "^4.10.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "prisma": "^4.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
