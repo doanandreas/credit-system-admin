@@ -2,9 +2,18 @@
 require("dotenv").config();
 
 const express = require("express");
+const morgan = require("morgan");
+
 const router = require("./routes");
 
 const app = express();
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+} else if (process.env.NODE_ENV === "production") {
+  app.use(morgan("common"));
+}
+
 app.use(router);
 
 const PORT = process.env.PORT || 5000;
