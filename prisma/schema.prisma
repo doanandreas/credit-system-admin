@@ -57,7 +57,7 @@ model Invoice {
   createdAt       DateTime      @default(now())
   deadlineAt      DateTime
   updatedAt       DateTime      @default(now())
-  status          InvoiceStatus
+  status          InvoiceStatus @default(PENDING)
   Payment         Payment[]
 }
 
