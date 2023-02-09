@@ -1,12 +1,17 @@
 const express = require("express");
 
-const { deposit, withdraw, purchase } = require("../controllers/credit");
-const { protectedRoute } = require("../middlewares/auth");
+const {
+  deposit,
+  withdraw,
+  purchase,
+  invoice,
+} = require("../controllers/credit");
 
 const router = express.Router();
 
-router.post("/deposit", protectedRoute, deposit);
-router.post("/withdraw", protectedRoute, withdraw);
-router.post("/purchase", protectedRoute, purchase);
+router.post("/deposit", deposit);
+router.post("/withdraw", withdraw);
+router.post("/purchase", purchase);
+router.post("/invoice", invoice);
 
 module.exports = router;

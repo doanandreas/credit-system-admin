@@ -86,3 +86,14 @@ exports.purchase = asyncHandler(async (req, res, next) => {
     price: car.price.toString(),
   });
 });
+
+// @desc	  Generate next invoice for purchase
+// @route	  POST /credit/invoice
+// @access	Private
+exports.invoice = asyncHandler(async (req, res, next) => {
+  const { carPurchaseId } = req.body;
+
+  res.status(200).json({
+    success: true,
+  });
+});
