@@ -68,7 +68,7 @@ exports.purchase = asyncHandler(async (req, res, next) => {
   if (!leasing)
     throw new ErrorResponse(`Leasing not found with ID ${leasingId}`, 400);
 
-  await prisma.carPurchase.create({
+  const carPurchase = await prisma.carPurchase.create({
     data: {
       userId: req.user.id,
       carId,
@@ -78,6 +78,8 @@ exports.purchase = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({
+    success: true,
+    carPurchaseId: carPurchase.id,
     customer: req.user.name,
     leasing: leasing.leasingName,
     car: `${car.brandName} ${car.groupModelName} ${car.modelName}`,
