@@ -48,3 +48,15 @@ exports.withdraw = asyncHandler(async (req, res, next) => {
     balance: updated.balance.toString(),
   });
 });
+
+// @desc	  Purchase a car by user
+// @route	  POST /credit/purchase
+// @access	Private
+exports.purchase = asyncHandler(async (req, res, next) => {
+  const { userId, carId, leasingId, durationInMonths } = req.body;
+
+  res.status(200).json({
+    success: true,
+    data: req.body
+  });
+});
