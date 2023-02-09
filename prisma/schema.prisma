@@ -27,17 +27,51 @@ model Leasing {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  username String @unique
-  balance  BigInt @default(0)
+  id          Int           @id @default(autoincrement())
+  name        String
+  username    String        @unique
+  balance     BigInt        @default(0)
+  CarPurchase CarPurchase[]
 }
 
 model CarPurchase {
-  id             Int     @id @default(autoincrement())
-  car            Car     @relation(fields: [carId], references: [id])
+  id             Int       @id @default(autoincrement())
+  customer       User      @relation(fields: [userId], references: [id])
+  userId         Int
+  car            Car       @relation(fields: [carId], references: [id])
   carId          Int
-  leasing        Leasing @relation(fields: [leasingId], references: [id])
+  leasing        Leasing   @relation(fields: [leasingId], references: [id])
   leasingId      Int
   creditDuration Int
+  Invoice        Invoice[]
+  createdAt      DateTime  @default(now())
+}
+
+model Invoice {
+  id              Int           @id @default(autoincrement())
+  carPurchase     CarPurchase   @relation(fields: [carPurchaseId], references: [id])
+  carPurchaseId   Int
+  amount          BigInt
+  remainderAmount BigInt
+  term            Int
+  createdAt       DateTime      @default(now())
+  deadlineAt      DateTime
+  updatedAt       DateTime      @default(now())
+  status          InvoiceStatus
+  Payment         Payment[]
+}
+
+enum InvoiceStatus {
+  PENDING
+  FULL_PAYMENT
+  PARTIAL_PAYMENT
+  NOT_PAID
+}
+
+model Payment {
+  id         Int     @id @default(autoincrement())
+  invoice    Invoice @relation(fields: [invoiceId], references: [id])
+  invoiceId  Int
+  paidAmount BigInt
+  createdAt  DateTime @default(now())
 }
