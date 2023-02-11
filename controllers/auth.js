@@ -1,10 +1,8 @@
-const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 
+const { User } = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
-
-const prisma = new PrismaClient();
 
 // @desc	  Register new user
 // @route	  POST /auth/register
@@ -12,11 +10,11 @@ const prisma = new PrismaClient();
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, username } = req.body;
 
-  const user = await prisma.user.create({ data: { name, username } });
+  const user = await User.create({ name, username });
 
   res.status(200).json({
     success: true,
-    data: { ...user, balance: user.balance.toString() },
+    data: user.toJSON(),
   });
 });
 
@@ -26,11 +24,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
   const { username } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  });
+  const user = await User.findByPk(username);
 
   if (!user)
     throw new ErrorResponse(
@@ -44,8 +38,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    name: user.name,
-    balance: user.balance.toString(),
+    data: user.toJSON(),
     token,
   });
 });
