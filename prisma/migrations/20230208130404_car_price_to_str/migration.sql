@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Car" ALTER COLUMN "price" SET DATA TYPE TEXT;
