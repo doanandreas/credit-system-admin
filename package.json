@@ -8,12 +8,8 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
-    "migrate": "prisma migrate dev",
     "seed:up": "sequelize-cli db:seed:all",
     "seed:down": "sequelize-cli db:seed:undo:all"
-  },
-  "prisma": {
-    "seed": "node prisma/seeder.js"
   },
   "dependencies": {
     "@prisma/client": "^4.10.0",
@@ -23,7 +19,6 @@
     "morgan": "^1.10.0",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
-    "prisma": "^4.10.0",
     "sequelize": "^6.28.0"
   },
   "devDependencies": {
