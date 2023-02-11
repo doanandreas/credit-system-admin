@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
     "migrate": "prisma migrate dev",
-    "seed": "prisma db seed"
+    "seed:up": "sequelize-cli db:seed:all",
+    "seed:down": "sequelize-cli db:seed:undo:all"
   },
   "prisma": {
     "seed": "node prisma/seeder.js"
