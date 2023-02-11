@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 
+const { User } = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -11,19 +12,13 @@ const prisma = new PrismaClient();
 exports.deposit = asyncHandler(async (req, res, next) => {
   const { amount } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: { username: req.user.username },
-  });
-
-  const updated = await prisma.user.update({
-    where: { username: req.user.username },
-    data: { balance: user.balance + BigInt(amount) },
-  });
+  let user = await User.findByPk(req.user.username);
+  user = await user.update({ balance: BigInt(user.balance) + BigInt(amount) });
+  user = user.toJSON();
 
   res.status(200).json({
     success: true,
-    name: user.name,
-    balance: updated.balance.toString(),
+    data: { ...user, balance: user.balance.toString() },
   });
 });
 
@@ -33,19 +28,13 @@ exports.deposit = asyncHandler(async (req, res, next) => {
 exports.withdraw = asyncHandler(async (req, res, next) => {
   const { amount } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: { username: req.user.username },
-  });
-
-  const updated = await prisma.user.update({
-    where: { username: req.user.username },
-    data: { balance: user.balance - BigInt(amount) },
-  });
+  let user = await User.findByPk(req.user.username);
+  user = await user.update({ balance: BigInt(user.balance) - BigInt(amount) });
+  user = user.toJSON();
 
   res.status(200).json({
     success: true,
-    name: user.name,
-    balance: updated.balance.toString(),
+    data: { ...user, balance: user.balance.toString() },
   });
 });
 
