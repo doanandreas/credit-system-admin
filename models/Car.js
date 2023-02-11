@@ -24,8 +24,12 @@ const Car = sequelize.define("Car", {
   },
   fullName: {
     type: DataTypes.VIRTUAL,
-    get: () => `${this.brandName} ${this.groupModelName} ${this.modelName}`,
-    set: () => throw new Error("Virtual attribute 'fullName' not to set"),
+    get() {
+      return `${this.brandName} ${this.groupModelName} ${this.modelName}`;
+    },
+    set(_) {
+      throw new Error("Virtual attribute 'fullName' not to set");
+    },
   },
 });
 
