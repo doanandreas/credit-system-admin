@@ -14,6 +14,9 @@ const User = sequelize.define("User", {
     type: DataTypes.BIGINT,
     allowNull: false,
     defaultValue: 0,
+    validate: {
+      min: 0,
+    },
   },
 });
 
