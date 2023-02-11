@@ -17,7 +17,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: { ...user.toJSON(), balance: user.balance.toString() },
+    data: user.toJSON(),
   });
 });
 
@@ -27,11 +27,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
   const { username } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  });
+  const user = await User.findByPk(username);
 
   if (!user)
     throw new ErrorResponse(
@@ -45,8 +41,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    name: user.name,
-    balance: user.balance.toString(),
+    data: user.toJSON(),
     token,
   });
 });
