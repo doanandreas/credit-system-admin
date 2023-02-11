@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Clipan Finance",
+    "rates": 12,
+    "terms": 12
+  },
+	{
+    "id": 2,
+    "name": "BFI",
+    "rates": 10,
+    "terms": 6
+  },
+	{
+    "id": 3,
+    "name": "SMS Finance",
+    "rates": 15,
+    "terms": 12
+  }
+]
