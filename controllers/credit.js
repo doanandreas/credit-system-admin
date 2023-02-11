@@ -1,10 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
-
 const { User, Car, Leasing, CarPurchase } = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
-
-const prisma = new PrismaClient();
 
 // @desc	  Deposit money to user
 // @route	  POST /credit/deposit
