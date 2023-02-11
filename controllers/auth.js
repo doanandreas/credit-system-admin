@@ -1,11 +1,8 @@
-const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 
 const { User } = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
-
-const prisma = new PrismaClient();
 
 // @desc	  Register new user
 // @route	  POST /auth/register
