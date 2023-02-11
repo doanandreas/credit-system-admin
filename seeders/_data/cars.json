@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "brandName": "Toyota",
     "groupModelName": "Avanza",
     "modelName": "1.3 E MT",
@@ -7,6 +8,7 @@
     "price": 110000000
   },
   {
+    "id": 2,
     "brandName": "Toyota",
     "groupModelName": "Avanza",
     "modelName": "1.3 E AT",
@@ -14,6 +16,7 @@
     "price": 115000000
   },
   {
+    "id": 3,
     "brandName": "Toyota",
     "groupModelName": "Agya",
     "modelName": "1.0 L MT",
@@ -21,6 +24,7 @@
     "price": 88500000
   },
   {
+    "id": 4,
     "brandName": "Volkswagen",
     "groupModelName": "Tiguan",
     "modelName": "1.4 TFSI AT",
@@ -28,6 +32,7 @@
     "price": 213000000
   },
   {
+    "id": 5,
     "brandName": "BMW",
     "groupModelName": "X1",
     "modelName": "F48 sDrive18i Xline Executive AT",
@@ -35,6 +40,7 @@
     "price": 410000000
   },
   {
+    "id": 6,
     "brandName": "Honda",
     "groupModelName": "HR-V",
     "modelName": "1.8 E Prestige",
@@ -42,6 +48,7 @@
     "price": 259000000
   },
   {
+    "id": 7,
     "brandName": "Lexus",
     "groupModelName": "LX",
     "modelName": "570 J200 SUV AT",
