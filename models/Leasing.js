@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const CarPurchase = require("./CarPurchase");
 const sequelize = require("./db");
 
 const Leasing = sequelize.define("Leasing", {
@@ -16,5 +17,8 @@ const Leasing = sequelize.define("Leasing", {
     validate: { min: 0 },
   },
 });
+
+Leasing.hasMany(CarPurchase);
+CarPurchase.belongsTo(Leasing);
 
 module.exports = Leasing;
