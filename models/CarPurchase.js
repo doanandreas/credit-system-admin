@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./db");
+const Invoice = require("./Invoice");
 
 const CarPurchase = sequelize.define(
   "CarPurchase",
@@ -16,5 +17,8 @@ const CarPurchase = sequelize.define(
   },
   { paranoid: true }
 );
+
+CarPurchase.hasMany(Invoice);
+Invoice.belongsTo(CarPurchase);
 
 module.exports = CarPurchase;
