@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./db");
+const Payment = require("./Payment");
 
 const Invoice = sequelize.define(
   "Invoice",
@@ -29,8 +30,17 @@ const Invoice = sequelize.define(
         throw new Error("Can't set virtual field 'deadline' in Invoice");
       },
     },
+    // paidAmount: {
+    //   type: DataTypes.VIRTUAL,
+    //   get() {
+    //     const payments = this.getPayment()
+    //   }
+    // }
   },
   { paranoid: true }
 );
+
+Invoice.hasMany(Payment);
+Payment.belongsTo(Invoice);
 
 module.exports = Invoice;
