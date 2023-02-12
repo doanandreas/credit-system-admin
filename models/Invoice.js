@@ -17,6 +17,7 @@ const Invoice = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    latestPaymentDate: DataTypes.DATE,
     deadlineDate: {
       type: DataTypes.VIRTUAL,
       get() {
