@@ -38,7 +38,7 @@ exports.withdraw = asyncHandler(async (req, res, next) => {
 // @route	  POST /credit/purchase
 // @access	Private
 exports.purchase = asyncHandler(async (req, res, next) => {
-  const { carId, leasingId, creditDuration } = req.body;
+  const { carId, leasingId, creditDuration, purchaseDate } = req.body;
 
   const car = await Car.findByPk(carId);
 
@@ -49,11 +49,14 @@ exports.purchase = asyncHandler(async (req, res, next) => {
   if (!leasing)
     throw new ErrorResponse(`Leasing not found with ID ${leasingId}`, 400);
 
+  parsedDate = purchaseDate ? new Date(purchaseDate) : null;
+
   const carPurchase = await CarPurchase.create({
     creditDuration,
     UserUsername: req.user.username,
     CarId: carId,
     LeasingId: leasingId,
+    ...(parsedDate && { purchaseDate: parsedDate }),
   });
 
   res.status(200).json({

@@ -8,6 +8,11 @@ const CarPurchase = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    purchaseDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   { paranoid: true }
 );
