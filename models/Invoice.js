@@ -29,11 +29,6 @@ const Invoice = sequelize.define(
         throw new Error("Can't set virtual field 'deadline' in Invoice");
       },
     },
-    status: {
-      type: DataTypes.ENUM,
-      values: ["PENDING", "PARTIAL_PAID", "FULL_PAID", "NOT_PAID"],
-      allowNull: false,
-    },
   },
   { paranoid: true }
 );
