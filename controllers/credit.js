@@ -108,6 +108,7 @@ exports.invoice = asyncHandler(async (req, res, next) => {
     term: nextTerm,
     amount: nextAmt,
     invoiceDate: nextInvoiceDate,
+    CarPurchaseId: carPurchaseId,
   });
 
   res.status(200).json({
