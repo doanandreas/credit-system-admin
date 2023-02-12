@@ -30,12 +30,20 @@ const Invoice = sequelize.define(
         throw new Error("Can't set virtual field 'deadline' in Invoice");
       },
     },
-    // paidAmount: {
-    //   type: DataTypes.VIRTUAL,
-    //   get() {
-    //     const payments = this.getPayment()
-    //   }
-    // }
+    paidAmount: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    remainingAmount: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return BigInt(this.amount) - BigInt(this.paidAmount);
+      },
+      set() {
+        throw new Error("Can't set virtual field 'remainingAmount' in Invoice");
+      },
+    },
   },
   { paranoid: true }
 );
