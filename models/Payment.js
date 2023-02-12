@@ -23,6 +23,10 @@ const Payment = sequelize.define(
 Payment.addHook("beforeCreate", async (payment, _) => {
   const invoice = await payment.getInvoice();
   invoice.paidAmount = BigInt(invoice.paidAmount) + BigInt(payment.amount);
+
+  if (invoice.latestPaymentDate < payment.transferDate)
+    invoice.latestPaymentDate = payment.transferDate;
+
   invoice.save();
 });
 
