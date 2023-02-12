@@ -22,7 +22,7 @@ const Invoice = sequelize.define(
         return new Date(
           this.invoiceDate.getFullYear(),
           this.invoiceDate.getMonth() + 1,
-          0
+          1
         );
       },
       set() {

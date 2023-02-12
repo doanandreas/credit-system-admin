@@ -1,4 +1,4 @@
-const { User, Car, Leasing, CarPurchase } = require("../models");
+const { User, Car, Leasing, CarPurchase, Invoice } = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -49,14 +49,14 @@ exports.purchase = asyncHandler(async (req, res, next) => {
   if (!leasing)
     throw new ErrorResponse(`Leasing not found with ID ${leasingId}`, 400);
 
-  parsedDate = purchaseDate ? new Date(purchaseDate) : null;
-
   const carPurchase = await CarPurchase.create({
     creditDuration,
     UserUsername: req.user.username,
     CarId: carId,
     LeasingId: leasingId,
-    ...(parsedDate && { purchaseDate: parsedDate }),
+    ...(purchaseDate && {
+      purchaseDate: new Date(purchaseDate),
+    }),
   });
 
   res.status(200).json({
@@ -77,7 +77,41 @@ exports.purchase = asyncHandler(async (req, res, next) => {
 exports.invoice = asyncHandler(async (req, res, next) => {
   const { carPurchaseId } = req.body;
 
+  const carPurchase = await CarPurchase.findByPk(carPurchaseId, {
+    include: ["Car", "Leasing"],
+  });
+  const invoices = await Invoice.findAll({
+    where: { CarPurchaseId: carPurchaseId },
+  });
+
+  let nextTerm;
+  let nextInvoiceDate;
+  let nextAmt;
+
+  if (invoices.length === 0) {
+    nextTerm = 1;
+
+    const { purchaseDate } = carPurchase;
+    // TODO: fix date off by one day
+    nextInvoiceDate = new Date(
+      purchaseDate.getFullYear(),
+      purchaseDate.getMonth() + 1,
+      2
+    );
+
+    const oneTermAmt =
+      BigInt(carPurchase.Car.price) / BigInt(carPurchase.creditDuration);
+    nextAmt = (oneTermAmt * (100n + BigInt(carPurchase.Leasing.rates))) / 100n;
+  }
+
+  const nextInvoice = await Invoice.create({
+    term: nextTerm,
+    amount: nextAmt,
+    invoiceDate: nextInvoiceDate,
+  });
+
   res.status(200).json({
     success: true,
+    invoice: nextInvoice,
   });
 });
