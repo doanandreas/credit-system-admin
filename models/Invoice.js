@@ -39,7 +39,7 @@ const Invoice = sequelize.define(
     remainingAmount: {
       type: DataTypes.VIRTUAL,
       get() {
-        return BigInt(this.amount) - BigInt(this.paidAmount);
+        return (BigInt(this.amount) - BigInt(this.paidAmount)).toString();
       },
       set() {
         throw new Error("Can't set virtual field 'remainingAmount' in Invoice");
