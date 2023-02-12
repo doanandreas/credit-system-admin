@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./db");
+const Invoice = require("./Invoice");
 
 const Payment = sequelize.define(
   "Payment",
@@ -11,8 +12,18 @@ const Payment = sequelize.define(
         min: 0,
       },
     },
+    transferDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   { paranoid: true }
 );
+
+Payment.addHook("beforeCreate", async (payment, _) => {
+  const invoice = await payment.getInvoice();
+  invoice.paidAmount = BigInt(invoice.paidAmount) + BigInt(payment.amount);
+  invoice.save();
+});
 
 module.exports = Payment;
