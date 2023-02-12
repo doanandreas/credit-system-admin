@@ -116,3 +116,15 @@ exports.invoice = asyncHandler(async (req, res, next) => {
     invoice: nextInvoice,
   });
 });
+
+// @desc	  Transfer money to pay invoice
+// @route	  POST /credit/transfer
+// @access	Private
+exports.transfer = asyncHandler(async (req, res, next) => {
+  const { amount } = req.body;
+
+  res.status(200).json({
+    success: true,
+    amount,
+  });
+});
