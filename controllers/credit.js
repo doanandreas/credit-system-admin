@@ -1,4 +1,11 @@
-const { User, Car, Leasing, CarPurchase, Invoice } = require("../models");
+const {
+  User,
+  Car,
+  Leasing,
+  CarPurchase,
+  Invoice,
+  Payment,
+} = require("../models");
 const asyncHandler = require("../utils/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -121,10 +128,40 @@ exports.invoice = asyncHandler(async (req, res, next) => {
 // @route	  POST /credit/transfer
 // @access	Private
 exports.transfer = asyncHandler(async (req, res, next) => {
-  const { amount } = req.body;
+  const { amount, transferDate, invoiceId } = req.body;
+
+  const user = await User.findByPk(req.user.username);
+  const invoice = await Invoice.findByPk(invoiceId, { include: "CarPurchase" });
+
+  if (!invoice)
+    throw new ErrorResponse(`Invoice not found with id of ${invoiceId}`, 404);
+  if (invoice.CarPurchase.UserUsername !== req.user.username)
+    throw new ErrorResponse(
+      `User mismatch. Please transfer only to invoice made by yourself`
+    );
+  if (BigInt(amount) > user.balance)
+    throw new ErrorResponse(
+      `Transfer amount ${amount} bigger than user balance ${user.balance}`,
+      400
+    );
+
+  const parsedDate = new Date(transferDate);
+  if (parsedDate < invoice.invoiceDate || invoice.deadlineDate < parsedDate)
+    throw new ErrorResponse(
+      `Transfer date ${transferDate} outside invoice range`
+    );
+
+  user.balance = BigInt(user.balance) - BigInt(amount);
+  await user.save();
+
+  const payment = await Payment.create({
+    amount,
+    transferDate: parsedDate,
+    InvoiceId: invoiceId,
+  });
 
   res.status(200).json({
     success: true,
-    amount,
+    payment,
   });
 });
