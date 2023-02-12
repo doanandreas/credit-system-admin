@@ -85,30 +85,59 @@ exports.invoice = asyncHandler(async (req, res, next) => {
   const { carPurchaseId } = req.body;
 
   const carPurchase = await CarPurchase.findByPk(carPurchaseId, {
-    include: ["Car", "Leasing"],
+    include: ["Car", "Leasing", "Invoices"],
+    order: [[Invoice, "term", "asc"]],
   });
-  const invoices = await Invoice.findAll({
-    where: { CarPurchaseId: carPurchaseId },
-  });
+  if (!carPurchase)
+    throw new ErrorResponse(
+      `Car purchase not found with id of ${carPurchaseId}`,
+      404
+    );
+  const { Car: car, Leasing: leasing, Invoices: invoices } = carPurchase;
 
   let nextTerm;
   let nextInvoiceDate;
   let nextAmt;
 
-  if (invoices.length === 0) {
-    nextTerm = 1;
+  if (invoices.length >= carPurchase.creditDuration) {
+    const prevInvoice = invoices[invoices.length - 1];
 
-    const { purchaseDate } = carPurchase;
-    // TODO: fix date off by one day
+    nextTerm = prevInvoice.term + 1;
+
     nextInvoiceDate = new Date(
-      purchaseDate.getFullYear(),
-      purchaseDate.getMonth() + 1,
+      prevInvoice.invoiceDate.getFullYear(),
+      prevInvoice.invoiceDate.getMonth() + 1,
       2
     );
 
-    const oneTermAmt =
-      BigInt(carPurchase.Car.price) / BigInt(carPurchase.creditDuration);
-    nextAmt = (oneTermAmt * (100n + BigInt(carPurchase.Leasing.rates))) / 100n;
+    nextAmt =
+      (BigInt(prevInvoice.remainingAmount) * (100n + BigInt(leasing.rates))) /
+      100n;
+  } else if (invoices.length > 0) {
+    const prevInvoice = invoices[invoices.length - 1];
+
+    nextTerm = prevInvoice.term + 1;
+
+    nextInvoiceDate = new Date(
+      prevInvoice.invoiceDate.getFullYear(),
+      prevInvoice.invoiceDate.getMonth() + 1,
+      2
+    );
+
+    const oneTermAmt = BigInt(car.price) / BigInt(carPurchase.creditDuration);
+    const cumulativeAmt = oneTermAmt + BigInt(prevInvoice.remainingAmount);
+    nextAmt = (cumulativeAmt * (100n + BigInt(leasing.rates))) / 100n;
+  } else {
+    nextTerm = 1;
+
+    nextInvoiceDate = new Date(
+      carPurchase.purchaseDate.getFullYear(),
+      carPurchase.purchaseDate.getMonth() + 1,
+      2
+    );
+
+    const oneTermAmt = BigInt(car.price) / BigInt(carPurchase.creditDuration);
+    nextAmt = (oneTermAmt * (100n + BigInt(leasing.rates))) / 100n;
   }
 
   const nextInvoice = await Invoice.create({
